@@ -205,6 +205,17 @@ class ElasticaService extends \Object
      */
     public function refresh()
     {
+		if ($this->indexingMemory) {
+			set_increase_memory_limit_max($this->indexingMemory);
+            if ($this->indexingMemory == 'unlimited') {
+                increase_memory_limit_to();
+            } else {
+                increase_memory_limit_to($this->indexingMemory);
+            }
+
+            $this->indexingMemorySet = true;
+        }
+
         $reading_mode = \Versioned::get_reading_mode();
         \Versioned::set_reading_mode('Stage.Live');
 
