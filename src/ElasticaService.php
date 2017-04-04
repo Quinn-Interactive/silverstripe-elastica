@@ -216,8 +216,6 @@ class ElasticaService extends \Object
             $this->indexingMemorySet = true;
         }
 
-		$indexed = $removed = 0;
-
         $reading_mode = \Versioned::get_reading_mode();
         \Versioned::set_reading_mode('Stage.Live');
 
@@ -231,12 +229,10 @@ class ElasticaService extends \Object
                     (!$record instanceof \SiteTree && !$record->hasMethod('getShowInSearch'))
                 ) {
                     $this->index($record);
-					$indexed++;
-                    print "<strong>$indexed INDEXED: </strong> " . $record->getTitle() . "<br>\n";
+                    print "<strong>INDEXED: </strong> " . $record->getTitle() . "<br>\n";
                 } else {
                     $this->remove($record);
-					$removed++;
-                    print "<strong>$removed REMOVED: </strong> " . $record->getTitle() . "<br>\n";
+                    print "<strong>REMOVED: </strong> " . $record->getTitle() . "<br>\n";
                 }
             }
         }

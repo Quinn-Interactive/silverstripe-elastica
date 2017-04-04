@@ -29,9 +29,6 @@ class ReindexTask extends \BuildTask
 		# set the time limit to 60 minutes
 		set_time_limit(60 * 60);
 
-		// turn off Translatable local stuff
-		\Translatable::disable_locale_filter();
-
         $message = function ($content) {
             print(\Director::is_cli() ? "$content\n" : "<p>$content</p>");
         };
