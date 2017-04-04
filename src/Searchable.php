@@ -281,9 +281,14 @@ class Searchable extends \DataExtension
 
                 $possibleRelations = array_merge($this->owner->has_many(), $this->owner->has_one(), $this->owner->many_many());
 
-                list($relation, $fieldName) = explode('_', $field);
+                if (strstr($field, '_')) {
+                    list($relation, $fieldName) = explode('_', $field);
+                }
+                else {
+                    $relation = false;
+                }
 
-                if (array_key_exists($relation, $possibleRelations)) {
+                if ($relation && array_key_exists($relation, $possibleRelations)) {
 
                     $related = $this->owner->$relation();
 
