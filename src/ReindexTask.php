@@ -24,6 +24,11 @@ class ReindexTask extends \BuildTask
 
     public function run($request)
     {
+		$start_time = microtime(true);
+
+		# set the time limit to 60 minutes
+		set_time_limit(60 * 60);
+
         $message = function ($content) {
             print(\Director::is_cli() ? "$content\n" : "<p>$content</p>");
         };
@@ -33,6 +38,12 @@ class ReindexTask extends \BuildTask
 
         $message('Refreshing the index');
         $this->service->refresh();
+
+
+		$end_time = microtime(true);
+		$elapsed_time = $end_time - $start_time;
+		$message('#####################################');
+		$message("Finished in " . $elapsed_time . " seconds");
     }
 
 }
