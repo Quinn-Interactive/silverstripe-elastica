@@ -221,7 +221,10 @@ class ElasticaService extends \Object
         $reading_mode = \Versioned::get_reading_mode();
         \Versioned::set_reading_mode('Stage.Live');
 
+		$classes_indexed = [];
+
         foreach ($this->getIndexedClasses() as $class) {
+			$classes_indexed[$class] = 0;
             foreach ($class::get() as $record) {
 
                 //Only index records with Show In Search enabled for Site Tree descendants
@@ -231,14 +234,19 @@ class ElasticaService extends \Object
                     (!$record instanceof \SiteTree && !$record->hasMethod('getShowInSearch'))
                 ) {
                     $this->index($record);
-					$indexed++;
-                    print "<strong>$indexed INDEXED: </strong> " . $record->getTitle() . "<br>\n";
+                    $indexed++;
+                    $classes_indexed[$class]++;
+                    print "<strong>$indexed {$record->ClassName} {$record->ID} INDEXED: </strong> " . $record->getTitle() . "<br>\n";
                 } else {
                     $this->remove($record);
-					$removed++;
-                    print "<strong>$removed REMOVED: </strong> " . $record->getTitle() . "<br>\n";
+                    $removed++;
+                    print "<strong>$removed {$record->ClassName} {$record->ID} REMOVED: </strong> " . $record->getTitle() . "<br>\n";
                 }
             }
+        }
+        print "===============================<br>\n";
+        foreach ($classes_indexed as $class => $count) {
+            print "$class indexed: $count<br>\n";
         }
         \Versioned::set_reading_mode($reading_mode);
     }
