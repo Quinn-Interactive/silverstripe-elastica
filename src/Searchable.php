@@ -21,14 +21,14 @@ class Searchable extends \DataExtension
         'Boolean' => 'boolean',
         'Decimal' => 'double',
         'Double' => 'double',
-        'Enum' => 'string',
+        'Enum' => 'text',
         'Float' => 'float',
-        'HTMLText' => 'string',
-        'HTMLVarchar' => 'string',
+        'HTMLText' => 'text',
+        'HTMLVarchar' => 'text',
         'Int' => 'integer',
         'SS_Datetime' => 'date',
-        'Text' => 'string',
-        'Varchar' => 'string',
+        'Text' => 'text',
+        'Varchar' => 'text',
         'Year' => 'integer',
         'File' => 'attachment',
         'Date' => 'date'
@@ -59,7 +59,7 @@ class Searchable extends \DataExtension
     /**
      * Returns an array of fields to be indexed. Additional configuration can be attached to these fields.
      *
-     * Format: array('FieldName' => array('type' => 'string'));
+     * Format: array('FieldName' => array('type' => 'text'));
      *
      * FieldName can be a field in the database or a method name
      *
